@@ -6,711 +6,600 @@
 <title>Sukoon Music</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
 }
 
-body {
-  background: #08070d;
-  color: white;
-  font-family: Arial, sans-serif;
-  padding-bottom: 90px;
+body{
+  background:#09070d;
+  color:white;
+  padding-bottom:110px;
 }
 
-.header {
-  padding: 25px 20px 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+header{
+  padding:22px 18px 10px;
 }
 
-.logo {
-  font-size: 32px;
-  font-weight: bold;
-  color: #a855f7;
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  color:#b56cff;
 }
 
-.subtitle {
-  color: #aaa;
-  margin-top: 4px;
+.subtitle{
+  color:#aaa;
+  margin-top:5px;
 }
 
-.search {
-  margin: 15px 20px;
-  background: #18161f;
-  border-radius: 15px;
-  padding: 15px;
-  color: #999;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.search{
+  margin:15px 18px;
 }
 
-.search input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 16px;
+.search input{
+  width:100%;
+  padding:14px 18px;
+  border:0;
+  outline:none;
+  border-radius:30px;
+  background:#211b2b;
+  color:white;
+  font-size:15px;
 }
 
-.search input::placeholder {
-  color: #888;
+.hero{
+  margin:18px;
+  padding:25px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#6d2cff,#b84cff);
 }
 
-h2 {
-  margin: 25px 20px 15px;
+.hero h1{
+  font-size:27px;
 }
 
-.hero {
-  margin: 0 20px;
-  padding: 25px;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #6d28d9, #241044);
+.hero p{
+  margin-top:8px;
+  color:#eee;
 }
 
-.hero h1 {
-  font-size: 30px;
-  margin: 10px 0;
+.section{
+  padding:8px 18px;
 }
 
-.hero p {
-  color: #ddd;
-  margin-bottom: 20px;
+.section-title{
+  font-size:21px;
+  font-weight:bold;
+  margin:15px 0;
 }
 
-.play {
-  background: white;
-  color: #5b21b6;
-  border: none;
-  padding: 13px 22px;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: bold;
+.cards{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
 }
 
-.cards {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 0 20px;
+.card{
+  min-width:145px;
+  background:#17131e;
+  padding:12px;
+  border-radius:16px;
 }
 
-.card {
-  min-width: 145px;
-  background: #17151d;
-  padding: 12px;
-  border-radius: 16px;
+.cover{
+  height:120px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#762cff,#291044);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
 }
 
-.cover {
-  height: 125px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #8b5cf6, #111827);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 45px;
+.card h3{
+  margin-top:10px;
+  font-size:15px;
 }
 
-.card h3 {
-  margin-top: 10px;
-  font-size: 15px;
+.card p{
+  margin-top:5px;
+  color:#999;
+  font-size:12px;
 }
 
-.card p {
-  color: #888;
-  font-size: 13px;
-  margin-top: 5px;
+.play-small{
+  margin-top:10px;
+  width:100%;
+  border:0;
+  padding:9px;
+  border-radius:20px;
+  background:#9d4dff;
+  color:white;
 }
 
-.search-results {
-  margin: 0 20px;
+.add-box{
+  margin:18px;
+  padding:18px;
+  border:1px dashed #8f4cff;
+  border-radius:18px;
+  text-align:center;
 }
 
-.result {
-  background: #17151d;
-  padding: 15px;
-  border-radius: 15px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.add-btn{
+  display:inline-block;
+  background:#9d4dff;
+  color:white;
+  padding:12px 22px;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.result-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+#songFile{
+  display:none;
 }
 
-.result-cover {
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-  background: #6d28d9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
+.empty{
+  color:#888;
+  text-align:center;
+  padding:25px 10px;
 }
 
-.result button {
-  background: #8b5cf6;
-  border: none;
-  color: white;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  font-size: 18px;
+.player{
+  position:fixed;
+  left:10px;
+  right:10px;
+  bottom:60px;
+  background:#21172c;
+  border:1px solid #382647;
+  border-radius:20px;
+  padding:13px;
+  z-index:10;
+  box-shadow:0 5px 30px #000;
 }
 
-.no-result {
-  color: #888;
-  text-align: center;
-  padding: 20px;
+.song-info{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.music-player {
-  margin: 25px 20px;
-  padding: 18px;
-  background: linear-gradient(135deg, #211033, #120d19);
-  border: 1px solid #6d28d9;
-  border-radius: 20px;
+.song-title{
+  font-weight:bold;
 }
 
-.song-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.song-artist{
+  color:#aaa;
+  font-size:12px;
+  margin-top:4px;
 }
 
-.song-cover {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  background: #6d28d9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
+.progress{
+  width:100%;
+  margin:10px 0;
 }
 
-.song-info h3 {
-  margin: 0;
+.controls{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
 }
 
-.song-info p {
-  margin-top: 5px;
-  color: #999;
+.controls button{
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:22px;
 }
 
-#progress {
-  width: 100%;
-  margin: 18px 0;
-  accent-color: #a855f7;
+.play-btn{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#a64cff !important;
 }
 
-.player-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 35px;
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:60px;
+  background:#100c15;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:20;
 }
 
-.player-buttons button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 25px;
+.bottom-nav div{
+  color:#aaa;
+  font-size:12px;
+  text-align:center;
 }
 
-.player-buttons .big-play {
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background: #8b5cf6;
-  font-size: 22px;
+.bottom-nav .active{
+  color:#b45cff;
 }
 
-.bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 75px;
-  background: #121016;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid #292431;
-  z-index: 10;
-}
-
-.nav {
-  text-align: center;
-  color: #888;
-  font-size: 12px;
-}
-
-.nav.active {
-  color: #a855f7;
-}
-
-.icon {
-  font-size: 25px;
-  display: block;
-  margin-bottom: 4px;
+.no-results{
+  text-align:center;
+  color:#888;
+  padding:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div>
-    <div class="logo">Sukoon 🎵</div>
-    <div class="subtitle">Music for your soul ❤️</div>
-  </div>
-
-  <div style="font-size:28px;">🔔</div>
-</div>
-
-
-<!-- SEARCH -->
+<header>
+  <div class="logo">Sukoon 🎵</div>
+  <div class="subtitle">Music for your peace</div>
+</header>
 
 <div class="search">
-  <span>🔍</span>
-
   <input
     type="text"
     id="searchInput"
-    placeholder="Search songs, artists, albums..."
+    placeholder="Search songs..."
     oninput="searchSongs()"
   >
 </div>
 
-
-<!-- SEARCH RESULTS -->
-
-<div id="searchResults" class="search-results"></div>
-
-
-<h2>Good Evening 👋</h2>
-
-
-<!-- HERO -->
-
 <div class="hero">
-
-  <small>FEATURED</small>
-
   <h1>Chill Vibes</h1>
-
-  <p>Relax your mind with the best music.</p>
-
-  <button class="play" onclick="playMusic()">
-    ▶ Play Now
-  </button>
-
+  <p>Relax, listen and enjoy your Sukoon.</p>
 </div>
 
-
-<!-- RECENTLY PLAYED -->
-
-<h2>Recently Played</h2>
-
-<div class="cards">
-
-  <div class="card">
-    <div class="cover">🎧</div>
-    <h3>Aesthetic Vibes</h3>
-    <p>Playlist</p>
+<!-- ADD SONG -->
+<div class="add-box">
+  <div style="font-size:18px;margin-bottom:10px;">
+    Add your own music 🎶
   </div>
 
-  <div class="card">
-    <div class="cover">🌙</div>
-    <h3>Night Music</h3>
-    <p>Chill Songs</p>
-  </div>
+  <label for="songFile" class="add-btn">
+    ＋ Add Song
+  </label>
 
-  <div class="card">
-    <div class="cover">❤️</div>
-    <h3>Love Songs</h3>
-    <p>Romantic</p>
-  </div>
-
+  <input
+    type="file"
+    id="songFile"
+    accept="audio/*"
+    onchange="addSong(event)"
+  >
 </div>
 
+<section class="section">
+  <div class="section-title">My Songs</div>
 
-<!-- MADE FOR YOU -->
-
-<h2>Made For You</h2>
-
-<div class="cards">
-
-  <div class="card">
-    <div class="cover">💜</div>
-    <h3>Daily Mix</h3>
-    <p>Your music mix</p>
+  <div class="cards" id="songList">
+    <div class="empty" id="emptyMessage">
+      अभी कोई song नहीं है.<br>
+      ऊपर <b>＋ Add Song</b> दबाकर MP3 जोड़ें।
+    </div>
   </div>
+</section>
 
-  <div class="card">
-    <div class="cover">🔥</div>
-    <h3>Trending</h3>
-    <p>Top songs</p>
-  </div>
-
-  <div class="card">
-    <div class="cover">⭐</div>
-    <h3>Discover</h3>
-    <p>New music</p>
-  </div>
-
-</div>
-
-
-<!-- MUSIC PLAYER -->
-
-<div class="music-player">
+<!-- PLAYER -->
+<div class="player">
 
   <div class="song-info">
-
-    <div class="song-cover">
-      🎵
-    </div>
-
     <div>
-      <h3 id="songTitle">Bella Ciao</h3>
-      <p id="songArtist">Money Heist</p>
+      <div class="song-title" id="songTitle">
+        No Song
+      </div>
+
+      <div class="song-artist" id="songArtist">
+        Add a song to start
+      </div>
     </div>
-
   </div>
-
 
   <input
     type="range"
+    class="progress"
     id="progress"
     value="0"
     min="0"
     max="100"
   >
 
-
-  <div class="player-buttons">
+  <div class="controls">
 
     <button onclick="rewind()">
-      ⏮
+      ↶
     </button>
 
     <button
-      class="big-play"
-      onclick="toggleMusic()"
+      class="play-btn"
       id="playBtn"
+      onclick="toggleMusic()"
     >
       ▶
     </button>
 
     <button onclick="forward()">
-      ⏭
+      ↷
     </button>
 
   </div>
 
 </div>
 
-
-<!-- MUSIC FILE -->
-
-<audio
-  id="music"
-  preload="metadata"
-  src="./Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3">
-</audio>
-
-
-<!-- BOTTOM NAV -->
-
-<div class="bottom">
-
-  <div class="nav active">
-    <span class="icon">⌂</span>
-    Home
-  </div>
-
-  <div class="nav">
-    <span class="icon">⌕</span>
-    Search
-  </div>
-
-  <div class="nav">
-    <span class="icon">♫</span>
-    Library
-  </div>
-
-  <div class="nav">
-    <span class="icon">♡</span>
-    Liked
-  </div>
-
-  <div class="nav">
-    <span class="icon">♙</span>
-    Profile
-  </div>
-
+<div class="bottom-nav">
+  <div class="active">⌂<br>Home</div>
+  <div>🔍<br>Search</div>
+  <div>♥<br>Library</div>
 </div>
 
+<audio id="music" preload="metadata"></audio>
 
 <script>
 
+let songs = [];
+
+let currentSong = null;
+
 const music = document.getElementById("music");
-
-const progress =
-  document.getElementById("progress");
-
-const playBtn =
-  document.getElementById("playBtn");
-
-const songTitle =
-  document.getElementById("songTitle");
-
-const songArtist =
-  document.getElementById("songArtist");
+const playBtn = document.getElementById("playBtn");
+const songTitle = document.getElementById("songTitle");
+const songArtist = document.getElementById("songArtist");
+const progress = document.getElementById("progress");
+const songList = document.getElementById("songList");
+const emptyMessage = document.getElementById("emptyMessage");
 
 
-/* SONG LIST */
+/* ADD SONG */
 
-const songs = [
+function addSong(event){
 
-  {
-    title: "Bella Ciao",
-    artist: "Money Heist"
+  const file = event.target.files[0];
+
+  if(!file){
+    return;
   }
 
-];
+  const song = {
+    title: file.name.replace(/\.[^/.]+$/, ""),
+    artist: "My Song",
+    file: file,
+    url: URL.createObjectURL(file)
+  };
+
+  songs.push(song);
+
+  emptyMessage.style.display = "none";
+
+  renderSongs();
+
+  playSong(song);
+
+  event.target.value = "";
+}
+
+
+/* SHOW SONGS */
+
+function renderSongs(){
+
+  songList.innerHTML = "";
+
+  if(songs.length === 0){
+
+    songList.innerHTML = `
+      <div class="empty">
+        अभी कोई song नहीं है.
+      </div>
+    `;
+
+    return;
+  }
+
+  songs.forEach((song,index)=>{
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="cover">🎵</div>
+
+      <h3>${escapeHtml(song.title)}</h3>
+
+      <p>${escapeHtml(song.artist)}</p>
+
+      <button class="play-small">
+        ▶ Play
+      </button>
+    `;
+
+    card.querySelector("button").onclick = function(){
+      playSong(song);
+    };
+
+    songList.appendChild(card);
+
+  });
+}
 
 
 /* PLAY SONG */
 
-function playSong(song) {
+function playSong(song){
 
-  songTitle.innerText = song.title;
+  currentSong = song;
 
-  songArtist.innerText = song.artist;
+  music.src = song.url;
+
+  songTitle.textContent = song.title;
+
+  songArtist.textContent = song.artist;
+
+  music.load();
 
   music.play()
-    .then(function() {
+    .then(function(){
 
       playBtn.innerHTML = "⏸";
 
     })
-    .catch(function(error) {
+    .catch(function(error){
 
-      console.log("Music error:", error);
+      console.log(error);
 
-      alert(
-        "Music load nahi ho raha. GitHub Pages ko refresh karo."
-      );
+      playBtn.innerHTML = "▶";
 
     });
-
-}
-
-
-/* MAIN PLAY */
-
-function playMusic() {
-
-  playSong(songs[0]);
-
 }
 
 
 /* PLAY / PAUSE */
 
-function toggleMusic() {
+function toggleMusic(){
 
-  if (music.paused) {
+  if(!currentSong){
 
-    playSong(songs[0]);
+    alert("पहले ＋ Add Song से कोई MP3 जोड़ें।");
 
-  } else {
+    return;
+  }
+
+  if(music.paused){
+
+    music.play()
+      .then(function(){
+        playBtn.innerHTML = "⏸";
+      });
+
+  }else{
 
     music.pause();
 
     playBtn.innerHTML = "▶";
 
   }
-
 }
 
 
-/* REWIND 10 SEC */
+/* REWIND */
 
-function rewind() {
+function rewind(){
 
-  music.currentTime =
-    Math.max(
-      0,
-      music.currentTime - 10
-    );
+  if(!currentSong) return;
 
+  music.currentTime = Math.max(
+    0,
+    music.currentTime - 10
+  );
 }
 
 
-/* FORWARD 10 SEC */
+/* FORWARD */
 
-function forward() {
+function forward(){
 
-  if (music.duration) {
+  if(!currentSong) return;
 
-    music.currentTime =
-      Math.min(
-        music.duration,
-        music.currentTime + 10
-      );
-
-  }
-
+  music.currentTime = Math.min(
+    music.duration || 0,
+    music.currentTime + 10
+  );
 }
 
 
 /* PROGRESS */
 
-music.addEventListener(
-  "timeupdate",
-  function() {
+music.addEventListener("timeupdate",function(){
 
-    if (music.duration) {
+  if(music.duration){
 
-      progress.value =
-        (music.currentTime /
-        music.duration) * 100;
-
-    }
+    progress.value =
+      (music.currentTime / music.duration) * 100;
 
   }
-);
+
+});
 
 
-/* MOVE PROGRESS */
+progress.addEventListener("input",function(){
 
-progress.addEventListener(
-  "input",
-  function() {
+  if(music.duration){
 
-    if (music.duration) {
-
-      music.currentTime =
-        (progress.value / 100) *
-        music.duration;
-
-    }
+    music.currentTime =
+      (progress.value / 100) * music.duration;
 
   }
-);
+
+});
 
 
-/* SONG FINISHED */
+/* SONG ENDED */
 
-music.addEventListener(
-  "ended",
-  function() {
+music.addEventListener("ended",function(){
 
-    playBtn.innerHTML = "▶";
+  playBtn.innerHTML = "▶";
 
-    progress.value = 0;
-
-  }
-);
+});
 
 
 /* SEARCH */
 
-function searchSongs() {
-
-  const input =
-    document.getElementById("searchInput");
-
-  const results =
-    document.getElementById("searchResults");
+function searchSongs(){
 
   const query =
-    input.value.toLowerCase().trim();
+    document.getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
 
+  const cards =
+    document.querySelectorAll(".card");
 
-  if (query === "") {
+  if(!query){
 
-    results.innerHTML = "";
-
-    return;
-
-  }
-
-
-  const found =
-    songs.filter(function(song) {
-
-      return (
-
-        song.title
-          .toLowerCase()
-          .includes(query)
-
-        ||
-
-        song.artist
-          .toLowerCase()
-          .includes(query)
-
-      );
-
+    cards.forEach(card=>{
+      card.style.display = "block";
     });
 
-
-  if (found.length === 0) {
-
-    results.innerHTML = `
-      <div class="no-result">
-        😔 Song nahi mili
-      </div>
-    `;
-
     return;
-
   }
 
+  let found = false;
 
-  results.innerHTML = `
+  songs.forEach((song,index)=>{
 
-    <div class="result">
+    const match =
+      song.title.toLowerCase().includes(query) ||
+      song.artist.toLowerCase().includes(query);
 
-      <div class="result-info">
+    if(cards[index]){
 
-        <div class="result-cover">
-          🎵
-        </div>
+      cards[index].style.display =
+        match ? "block" : "none";
 
-        <div>
-          <h3>${found[0].title}</h3>
+    }
 
-          <p style="color:#888;">
-            ${found[0].artist}
-          </p>
-        </div>
+    if(match){
+      found = true;
+    }
 
-      </div>
+  });
 
-      <button onclick="playMusic()">
-        ▶
-      </button>
+}
 
-    </div>
 
-  `;
+/* SECURITY */
+
+function escapeHtml(text){
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
 
 }
 
