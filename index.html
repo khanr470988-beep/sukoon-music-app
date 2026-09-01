@@ -140,7 +140,67 @@ h2 {
   display: block;
   margin-bottom: 4px;
 }
-</style>
+</style> .music-player {
+  margin: 25px 20px;
+  padding: 18px;
+  background: linear-gradient(135deg, #211033, #120d19);
+  border: 1px solid #6d28d9;
+  border-radius: 20px;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.song-cover {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: #6d28d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.song-info h3 {
+  margin: 0;
+}
+
+.song-info p {
+  margin-top: 5px;
+  color: #999;
+}
+
+#progress {
+  width: 100%;
+  margin: 18px 0;
+  accent-color: #a855f7;
+}
+
+.player-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+}
+
+.player-buttons button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 25px;
+}
+
+.player-buttons .big-play {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #8b5cf6;
+  font-size: 22px;
+}
 </head>
 
 <body>
@@ -241,8 +301,75 @@ h2 {
     Profile
   </div>
 
+</div><div class="music-player">
+  <div class="song-info">
+    <div class="song-cover">🎵</div>
+    <div>
+      <h3>Chill Vibes</h3>
+      <p>Sukoon Music</p>
+    </div>
+  </div>
+
+  <input type="range" id="progress" value="0">
+
+  <div class="player-buttons">
+    <button onclick="rewind()">⏮</button>
+    <button class="big-play" onclick="toggleMusic()" id="playBtn">▶</button>
+    <button onclick="forward()">⏭</button>
+  </div>
 </div>
-<audio id="music" controls style="width:100%; margin:20px 0;">
+
+<audio id="music">
+  <source src="Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("music");
+const progress = document.getElementById("progress");
+const playBtn = document.getElementById("playBtn");
+
+function playMusic() {
+  music.play();
+  playBtn.innerHTML = "⏸";
+}
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play();
+    playBtn.innerHTML = "⏸";
+  } else {
+    music.pause();
+    playBtn.innerHTML = "▶";
+  }
+}
+
+function rewind() {
+  music.currentTime = Math.max(0, music.currentTime - 10);
+}
+
+function forward() {
+  music.currentTime = Math.min(
+    music.duration,
+    music.currentTime + 10
+  );
+}
+
+music.addEventListener("timeupdate", () => {
+  if (music.duration) {
+    progress.value =
+      (music.currentTime / music.duration) * 100;
+  }
+});
+
+progress.addEventListener("input", () => {
+  music.currentTime =
+    (progress.value / 100) * music.duration;
+});
+
+music.addEventListener("ended", () => {
+  playBtn.innerHTML = "▶";
+});
+</script>
   <source src="Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3" type="audio/mpeg">
 </audio>
 
