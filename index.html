@@ -41,9 +41,21 @@ body {
   margin: 15px 20px;
   background: #18161f;
   border-radius: 15px;
-  padding: 16px;
+  padding: 15px;
   color: #999;
+}
+
+.search input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
   font-size: 16px;
+}
+
+.search input::placeholder {
+  color: #888;
 }
 
 h2 {
@@ -112,35 +124,54 @@ h2 {
   margin-top: 5px;
 }
 
-.bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 75px;
-  background: #121016;
+.search-results {
+  margin: 0 20px;
+}
+
+.result {
+  background: #17151d;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 10px;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  border-top: 1px solid #292431;
+  justify-content: space-between;
 }
 
-.nav {
-  text-align: center;
-  color: #888;
-  font-size: 12px;
+.result-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.nav.active {
-  color: #a855f7;
-}
-
-.icon {
+.result-cover {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: #6d28d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 25px;
-  display: block;
-  margin-bottom: 4px;
 }
-</style> .music-player {
+
+.result button {
+  background: #8b5cf6;
+  border: none;
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.no-result {
+  color: #888;
+  text-align: center;
+  padding: 20px;
+}
+
+.music-player {
   margin: 25px 20px;
   padding: 18px;
   background: linear-gradient(135deg, #211033, #120d19);
@@ -201,6 +232,37 @@ h2 {
   background: #8b5cf6;
   font-size: 22px;
 }
+
+.bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  background: #121016;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #292431;
+  z-index: 10;
+}
+
+.nav {
+  text-align: center;
+  color: #888;
+  font-size: 12px;
+}
+
+.nav.active {
+  color: #a855f7;
+}
+
+.icon {
+  font-size: 25px;
+  display: block;
+  margin-bottom: 4px;
+}
+</style>
 </head>
 
 <body>
@@ -210,20 +272,38 @@ h2 {
     <div class="logo">Sukoon 🎵</div>
     <div class="subtitle">Music for your soul ❤️</div>
   </div>
+
   <div style="font-size:28px;">🔔</div>
 </div>
 
+<!-- SEARCH -->
+
 <div class="search">
-  🔍 &nbsp; Search songs, artists, albums...
+  🔍
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search songs, artists, albums..."
+    oninput="searchSongs()"
+  >
 </div>
+
+<!-- SEARCH RESULTS -->
+
+<div id="searchResults" class="search-results"></div>
 
 <h2>Good Evening 👋</h2>
 
 <div class="hero">
   <small>FEATURED</small>
+
   <h1>Chill Vibes</h1>
+
   <p>Relax your mind with the best music.</p>
-  <button class="play" onclick="playMusic()">▶ Play Now</button>
+
+  <button class="play" onclick="playMusic()">
+    ▶ Play Now
+  </button>
 </div>
 
 <h2>Recently Played</h2>
@@ -274,109 +354,11 @@ h2 {
 
 </div>
 
-<div class="bottom">
+<!-- MUSIC PLAYER -->
 
-  <div class="nav active">
-    <span class="icon">⌂</span>
-    Home
-  </div>
+<div class="music-player">
 
-  <div class="nav">
-    <span class="icon">⌕</span>
-    Search
-  </div>
-
-  <div class="nav">
-    <span class="icon">♫</span>
-    Library
-  </div>
-
-  <div class="nav">
-    <span class="icon">♡</span>
-    Liked
-  </div>
-
-  <div class="nav">
-    <span class="icon">♙</span>
-    Profile
-  </div>
-
-</div><div class="music-player">
   <div class="song-info">
-    <div class="song-cover">🎵</div>
-    <div>
-      <h3>Chill Vibes</h3>
-      <p>Sukoon Music</p>
-    </div>
-  </div>
 
-  <input type="range" id="progress" value="0">
-
-  <div class="player-buttons">
-    <button onclick="rewind()">⏮</button>
-    <button class="big-play" onclick="toggleMusic()" id="playBtn">▶</button>
-    <button onclick="forward()">⏭</button>
-  </div>
-</div>
-
-<audio id="music">
-  <source src="Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const music = document.getElementById("music");
-const progress = document.getElementById("progress");
-const playBtn = document.getElementById("playBtn");
-
-function playMusic() {
-  music.play();
-  playBtn.innerHTML = "⏸";
-}
-
-function toggleMusic() {
-  if (music.paused) {
-    music.play();
-    playBtn.innerHTML = "⏸";
-  } else {
-    music.pause();
-    playBtn.innerHTML = "▶";
-  }
-}
-
-function rewind() {
-  music.currentTime = Math.max(0, music.currentTime - 10);
-}
-
-function forward() {
-  music.currentTime = Math.min(
-    music.duration,
-    music.currentTime + 10
-  );
-}
-
-music.addEventListener("timeupdate", () => {
-  if (music.duration) {
-    progress.value =
-      (music.currentTime / music.duration) * 100;
-  }
-});
-
-progress.addEventListener("input", () => {
-  music.currentTime =
-    (progress.value / 100) * music.duration;
-});
-
-music.addEventListener("ended", () => {
-  playBtn.innerHTML = "▶";
-});
-</script>
-  <source src="Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-function playMusic() {
-  document.getElementById("music").play();
-}
-</script>
-</body>
-</html>
+    <div class="song-cover">
+      🎵
