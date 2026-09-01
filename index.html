@@ -362,3 +362,335 @@ h2 {
 
     <div class="song-cover">
       🎵
+    </div>
+
+    <div>
+      <h3 id="songTitle">Chill Vibes</h3>
+      <p id="songArtist">Sukoon Music</p>
+    </div>
+
+  </div>
+
+  <input
+    type="range"
+    id="progress"
+    value="0"
+    min="0"
+    max="100"
+  >
+
+  <div class="player-buttons">
+
+    <button onclick="rewind()">
+      ⏮
+    </button>
+
+    <button
+      class="big-play"
+      onclick="toggleMusic()"
+      id="playBtn"
+    >
+      ▶
+    </button>
+
+    <button onclick="forward()">
+      ⏭
+    </button>
+
+  </div>
+
+</div>
+
+<!-- AUDIO -->
+
+<audio id="music">
+
+  <source
+    src="Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3"
+    type="audio/mpeg"
+  >
+
+</audio>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom">
+
+  <div class="nav active">
+    <span class="icon">⌂</span>
+    Home
+  </div>
+
+  <div class="nav">
+    <span class="icon">⌕</span>
+    Search
+  </div>
+
+  <div class="nav">
+    <span class="icon">♫</span>
+    Library
+  </div>
+
+  <div class="nav">
+    <span class="icon">♡</span>
+    Liked
+  </div>
+
+  <div class="nav">
+    <span class="icon">♙</span>
+    Profile
+  </div>
+
+</div>
+
+<script>
+
+const music = document.getElementById("music");
+
+const progress =
+  document.getElementById("progress");
+
+const playBtn =
+  document.getElementById("playBtn");
+
+const songTitle =
+  document.getElementById("songTitle");
+
+const songArtist =
+  document.getElementById("songArtist");
+
+
+// SONG LIST
+
+const songs = [
+
+  {
+    title: "Bella Ciao",
+    artist: "Money Heist",
+    file: "Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3"
+  }
+
+];
+
+
+// PLAY SONG
+
+function playSong(song) {
+
+  music.src = song.file;
+
+  songTitle.innerText = song.title;
+
+  songArtist.innerText = song.artist;
+
+  music.play();
+
+  playBtn.innerHTML = "⏸";
+
+}
+
+
+// PLAY MAIN SONG
+
+function playMusic() {
+
+  playSong(songs[0]);
+
+}
+
+
+// PLAY / PAUSE
+
+function toggleMusic() {
+
+  if (music.paused) {
+
+    music.play();
+
+    playBtn.innerHTML = "⏸";
+
+  } else {
+
+    music.pause();
+
+    playBtn.innerHTML = "▶";
+
+  }
+
+}
+
+
+// REWIND
+
+function rewind() {
+
+  music.currentTime =
+    Math.max(0, music.currentTime - 10);
+
+}
+
+
+// FORWARD
+
+function forward() {
+
+  if (music.duration) {
+
+    music.currentTime =
+      Math.min(
+        music.duration,
+        music.currentTime + 10
+      );
+
+  }
+
+}
+
+
+// PROGRESS BAR
+
+music.addEventListener(
+  "timeupdate",
+  function() {
+
+    if (music.duration) {
+
+      progress.value =
+        (music.currentTime /
+        music.duration) * 100;
+
+    }
+
+  }
+);
+
+
+// CHANGE PROGRESS
+
+progress.addEventListener(
+  "input",
+  function() {
+
+    if (music.duration) {
+
+      music.currentTime =
+        (progress.value / 100) *
+        music.duration;
+
+    }
+
+  }
+);
+
+
+// SONG END
+
+music.addEventListener(
+  "ended",
+  function() {
+
+    playBtn.innerHTML = "▶";
+
+    progress.value = 0;
+
+  }
+);
+
+
+// SEARCH
+
+function searchSongs() {
+
+  const input =
+    document.getElementById("searchInput");
+
+  const results =
+    document.getElementById("searchResults");
+
+  const query =
+    input.value.toLowerCase().trim();
+
+
+  if (query === "") {
+
+    results.innerHTML = "";
+
+    return;
+
+  }
+
+
+  const found =
+    songs.filter(function(song) {
+
+      return (
+        song.title
+          .toLowerCase()
+          .includes(query)
+
+        ||
+
+        song.artist
+          .toLowerCase()
+          .includes(query)
+      );
+
+    });
+
+
+  if (found.length === 0) {
+
+    results.innerHTML =
+      '<div class="no-result">' +
+      '😔 Song nahi mili' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  results.innerHTML = found.map(
+    function(song, index) {
+
+      return `
+
+        <div class="result">
+
+          <div class="result-info">
+
+            <div class="result-cover">
+              🎵
+            </div>
+
+            <div>
+
+              <h3>${song.title}</h3>
+
+              <p style="color:#888;">
+                ${song.artist}
+              </p>
+
+            </div>
+
+          </div>
+
+          <button
+            onclick="playSong(songs[${index}])"
+          >
+            ▶
+          </button>
+
+        </div>
+
+      `;
+
+    }
+  ).join("");
+
+}
+
+</script>
+
+</body>
+</html>
