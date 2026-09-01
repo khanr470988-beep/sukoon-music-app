@@ -43,6 +43,9 @@ body {
   border-radius: 15px;
   padding: 15px;
   color: #999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .search input {
@@ -276,10 +279,12 @@ h2 {
   <div style="font-size:28px;">🔔</div>
 </div>
 
+
 <!-- SEARCH -->
 
 <div class="search">
-  🔍
+  <span>🔍</span>
+
   <input
     type="text"
     id="searchInput"
@@ -288,13 +293,19 @@ h2 {
   >
 </div>
 
+
 <!-- SEARCH RESULTS -->
 
 <div id="searchResults" class="search-results"></div>
 
+
 <h2>Good Evening 👋</h2>
 
+
+<!-- HERO -->
+
 <div class="hero">
+
   <small>FEATURED</small>
 
   <h1>Chill Vibes</h1>
@@ -304,7 +315,11 @@ h2 {
   <button class="play" onclick="playMusic()">
     ▶ Play Now
   </button>
+
 </div>
+
+
+<!-- RECENTLY PLAYED -->
 
 <h2>Recently Played</h2>
 
@@ -330,6 +345,9 @@ h2 {
 
 </div>
 
+
+<!-- MADE FOR YOU -->
+
 <h2>Made For You</h2>
 
 <div class="cards">
@@ -354,6 +372,7 @@ h2 {
 
 </div>
 
+
 <!-- MUSIC PLAYER -->
 
 <div class="music-player">
@@ -365,11 +384,12 @@ h2 {
     </div>
 
     <div>
-      <h3 id="songTitle">Chill Vibes</h3>
-      <p id="songArtist">Sukoon Music</p>
+      <h3 id="songTitle">Bella Ciao</h3>
+      <p id="songArtist">Money Heist</p>
     </div>
 
   </div>
+
 
   <input
     type="range"
@@ -378,6 +398,7 @@ h2 {
     min="0"
     max="100"
   >
+
 
   <div class="player-buttons">
 
@@ -401,16 +422,15 @@ h2 {
 
 </div>
 
-<!-- AUDIO -->
 
-<audio id="music">
+<!-- MUSIC FILE -->
 
-  <source
-    src="Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3"
-    type="audio/mpeg"
-  >
-
+<audio
+  id="music"
+  preload="metadata"
+  src="./Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3">
 </audio>
+
 
 <!-- BOTTOM NAV -->
 
@@ -443,6 +463,7 @@ h2 {
 
 </div>
 
+
 <script>
 
 const music = document.getElementById("music");
@@ -460,37 +481,46 @@ const songArtist =
   document.getElementById("songArtist");
 
 
-// SONG LIST
+/* SONG LIST */
 
 const songs = [
 
   {
     title: "Bella Ciao",
-    artist: "Money Heist",
-    file: "Money%20Heist%20_%20Bella%20Ciao%20Ringtone%20-%20MobCup.Com.Co.mp3"
+    artist: "Money Heist"
   }
 
 ];
 
 
-// PLAY SONG
+/* PLAY SONG */
 
 function playSong(song) {
-
-  music.src = song.file;
 
   songTitle.innerText = song.title;
 
   songArtist.innerText = song.artist;
 
-  music.play();
+  music.play()
+    .then(function() {
 
-  playBtn.innerHTML = "⏸";
+      playBtn.innerHTML = "⏸";
+
+    })
+    .catch(function(error) {
+
+      console.log("Music error:", error);
+
+      alert(
+        "Music load nahi ho raha. GitHub Pages ko refresh karo."
+      );
+
+    });
 
 }
 
 
-// PLAY MAIN SONG
+/* MAIN PLAY */
 
 function playMusic() {
 
@@ -499,15 +529,13 @@ function playMusic() {
 }
 
 
-// PLAY / PAUSE
+/* PLAY / PAUSE */
 
 function toggleMusic() {
 
   if (music.paused) {
 
-    music.play();
-
-    playBtn.innerHTML = "⏸";
+    playSong(songs[0]);
 
   } else {
 
@@ -520,17 +548,20 @@ function toggleMusic() {
 }
 
 
-// REWIND
+/* REWIND 10 SEC */
 
 function rewind() {
 
   music.currentTime =
-    Math.max(0, music.currentTime - 10);
+    Math.max(
+      0,
+      music.currentTime - 10
+    );
 
 }
 
 
-// FORWARD
+/* FORWARD 10 SEC */
 
 function forward() {
 
@@ -547,7 +578,7 @@ function forward() {
 }
 
 
-// PROGRESS BAR
+/* PROGRESS */
 
 music.addEventListener(
   "timeupdate",
@@ -565,7 +596,7 @@ music.addEventListener(
 );
 
 
-// CHANGE PROGRESS
+/* MOVE PROGRESS */
 
 progress.addEventListener(
   "input",
@@ -583,7 +614,7 @@ progress.addEventListener(
 );
 
 
-// SONG END
+/* SONG FINISHED */
 
 music.addEventListener(
   "ended",
@@ -597,7 +628,7 @@ music.addEventListener(
 );
 
 
-// SEARCH
+/* SEARCH */
 
 function searchSongs() {
 
@@ -624,6 +655,7 @@ function searchSongs() {
     songs.filter(function(song) {
 
       return (
+
         song.title
           .toLowerCase()
           .includes(query)
@@ -633,6 +665,7 @@ function searchSongs() {
         song.artist
           .toLowerCase()
           .includes(query)
+
       );
 
     });
@@ -640,53 +673,44 @@ function searchSongs() {
 
   if (found.length === 0) {
 
-    results.innerHTML =
-      '<div class="no-result">' +
-      '😔 Song nahi mili' +
-      '</div>';
+    results.innerHTML = `
+      <div class="no-result">
+        😔 Song nahi mili
+      </div>
+    `;
 
     return;
 
   }
 
 
-  results.innerHTML = found.map(
-    function(song, index) {
+  results.innerHTML = `
 
-      return `
+    <div class="result">
 
-        <div class="result">
+      <div class="result-info">
 
-          <div class="result-info">
-
-            <div class="result-cover">
-              🎵
-            </div>
-
-            <div>
-
-              <h3>${song.title}</h3>
-
-              <p style="color:#888;">
-                ${song.artist}
-              </p>
-
-            </div>
-
-          </div>
-
-          <button
-            onclick="playSong(songs[${index}])"
-          >
-            ▶
-          </button>
-
+        <div class="result-cover">
+          🎵
         </div>
 
-      `;
+        <div>
+          <h3>${found[0].title}</h3>
 
-    }
-  ).join("");
+          <p style="color:#888;">
+            ${found[0].artist}
+          </p>
+        </div>
+
+      </div>
+
+      <button onclick="playMusic()">
+        ▶
+      </button>
+
+    </div>
+
+  `;
 
 }
 
